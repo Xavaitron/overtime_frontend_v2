@@ -12,7 +12,7 @@ export const getUserAccount = async () => {
       const web3 = new Web3(window.ethereum);
       await window.ethereum.request({ method: "eth_requestAccounts" });
       const accounts = await web3.eth.getAccounts();
-      return accounts[0]; 
+      return accounts[0];
     } catch (error) {
       console.error("Error connecting to MetaMask:", error);
       return null;
@@ -33,10 +33,38 @@ export const getContract = () => {
 export const getAdmin = async () => {
   const contract = getContract();
   try {
-    const admin = await contract.methods.admin().call(); 
+    const admin = await contract.methods.admin().call();
     return admin;
   } catch (error) {
     console.error("Error fetching admin from contract:", error);
     return null;
+  }
+};
+
+export const addTask = async (task) => {
+  const levelMapping = {
+    beginner: 1,
+    intermediate: 2,
+    advanced: 3
+  };
+  const contract = getContract();
+  const userAccount = await getUserAccount(); 
+  try {
+    if (!task || !task.estimatedHours || !task.wage) {
+      throw new Error("Incomplete task information.");
+    }
+
+    const gasEstimate = await contract.methods
+      .registerWorker(task.estimatedHours,levelMapping[task.skillLevel], task.wage)
+      .estimateGas({ from: userAccount });
+
+    const transaction = await contract.methods
+      .registerWorker(task.estimatedHours, task.wage)
+      .send({ from: userAccount, gas: gasEstimate });
+
+    console.log("Task successfully added to blockchain:", transaction);
+    return transaction;
+  } catch (error) {
+    console.error("Error while adding task to chain:", error);
   }
 };

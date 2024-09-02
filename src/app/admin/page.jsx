@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem } from "@/components/ui/select"
-import { getUserAccount, getAdmin } from "@/lib/connection"
+import { getUserAccount, getAdmin, addTask } from "@/lib/connection"
 
 export default function Page() {
   const [tasks, setTasks] = useState([
@@ -324,7 +324,7 @@ export default function Page() {
               </div>
               <div className="grid gap-1">
                 <Label htmlFor="skill-level">Skill Level</Label>
-                <Select
+                {/* <Select
                   id="skill-level"
                   value={newTask.skillLevel}
                   onValueChange={(e) => handleNewTaskChange("skillLevel", e.target.value)}>
@@ -333,7 +333,24 @@ export default function Page() {
                     <SelectItem value="intermediate">Intermediate</SelectItem>
                     <SelectItem value="advanced">Advanced</SelectItem>
                   </SelectContent>
-                </Select>
+                </Select> */}
+                <div className="flex items-center gap-2">
+                  <Badge
+                    // variant={userProfile.skillLevel === "Beginner" ? "secondary" : ""}
+                    onClick={(e) => handleNewTaskChange("skillLevel", e.target.value)}>
+                    Beginner
+                  </Badge>
+                  <Badge
+                    // variant={userProfile.skillLevel === "Intermediate" ? "primary" : ""}
+                    onClick={(e) => handleNewTaskChange("skillLevel", e.target.value)}>
+                    Intermediate
+                  </Badge>
+                  <Badge
+                    // variant={userProfile.skillLevel === "Advanced" ? "success" : ""}
+                    onClick={(e) => handleNewTaskChange("skillLevel", e.target.value)}>
+                    Advanced
+                  </Badge>
+                </div>
               </div>
               <div className="grid gap-1">
                 <Label htmlFor="estimated-hours">Estimated Hours</Label>
@@ -364,9 +381,6 @@ export default function Page() {
             </form>
           </div>
           <DialogFooter>
-            <div>
-              <Button variant="ghost">Cancel</Button>
-            </div>
             <Button type="submit" onClick={handleSaveTask}>
               Save Task
             </Button>
