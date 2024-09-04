@@ -29,14 +29,16 @@ This project uses *Next.js* for building a modern, server-side rendered frontend
 
 ## Getting Started
 
-To start the development server, use one of the following commands:
+To start the development server, first start the back-end then start the front-end, use one of the following commands:
 
 ```
+cd ./backend
+npm i 
+node ./index.js
+cd ..
+cd ./frontend
+npm i 
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
 Once the server is running, open [http://localhost:3000](http://localhost:3000/) in your browser to view your application.
