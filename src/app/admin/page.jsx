@@ -315,10 +315,10 @@ export default function Page() {
                   onChange={(e) => handleNewTaskChange("title", e.target.value)} />
               </div>
               <div className="grid gap-1">
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description">Dependencies</Label>
                 <Textarea
                   id="description"
-                  placeholder="Enter task description"
+                  placeholder="Enter dependencies ids seperated by commas"
                   value={newTask.description}
                   onChange={(e) => handleNewTaskChange("description", e.target.value)} />
               </div>
